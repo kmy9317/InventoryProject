@@ -1,0 +1,47 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
+
+#include "Inv_ItemFramgent.generated.h"
+
+USTRUCT(BlueprintType)
+struct FInv_ItemFragment
+{
+	GENERATED_BODY()
+
+	FInv_ItemFragment() {}
+	FInv_ItemFragment(const FInv_ItemFragment&) = default;
+	FInv_ItemFragment& operator=(const FInv_ItemFragment&) = default;
+	FInv_ItemFragment(FInv_ItemFragment&&) = default;
+	FInv_ItemFragment& operator=(FInv_ItemFragment&&) = default;
+	virtual ~FInv_ItemFragment() {}
+
+	FGameplayTag GetFragmentTag() const { return FragmentTag; }
+	void SetFragmentTag(const FGameplayTag& InFragmentTag) { FragmentTag = InFragmentTag; }
+	
+private:
+	
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	FGameplayTag FragmentTag = FGameplayTag::EmptyTag;
+};
+
+USTRUCT(BlueprintType)
+struct FInv_GridFragment : public FInv_ItemFragment
+{
+	GENERATED_BODY()
+
+public:
+	FIntPoint GetGridSize() const { return GridSize; }
+	void SetGridSize(const FIntPoint& InGridSize) { GridSize = InGridSize; }
+	float GetGridPadding() const { return GridPadding; }
+	void SetGridPadding(float InGridPadding) { GridPadding = InGridPadding; }
+	
+private:
+	
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	FIntPoint GridSize{1, 1};
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	float GridPadding{0.f};
+};
